@@ -46,7 +46,6 @@ const connection =  mysql.createConnection({
 // }
 
 
-
 // home route
 app.get("/",(req,res)=>{
   
@@ -65,14 +64,30 @@ app.get("/",(req,res)=>{
             res.send("some error occured");
         }
 })
+
+
 app.listen(8080,()=>{
     console.log(" server listening on port 8080");
 })
 
 // show route
+app.get("/user",(req,res)=>{
+    let q="select * from user";
 
-
-
+    try{
+        connection.query(q,(err,users)=>{    
+            if(err) throw err;
+           // console.log(result[0]["count(*)"]);
+          //console.log(result);
+            //res.send(result[0]["count(*)"]);
+            res.render("showusers.ejs",{users});
+    
+        })
+    }catch(err){
+        console.log(err);
+        res.send("some error occured");
+    }
+});
 
 // try{
 //     connection.query(q,[data],(err,result)=>{    
